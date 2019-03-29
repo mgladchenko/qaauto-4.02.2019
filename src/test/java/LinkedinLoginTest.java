@@ -2,6 +2,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class LinkedinLoginTest {
@@ -20,6 +21,18 @@ public class LinkedinLoginTest {
         signInButton.click();
 
         WebElement profileNavigationItem = driver.findElement(By.xpath("//li[@id='profile-nav-item']"));
+        Assert.assertTrue(profileNavigationItem.isDisplayed(),
+                "ProfileNavigation item is not displayed on Home page");
+
+        Assert.assertEquals(driver.getTitle(), "LinkedIn",
+                "Home page title is wrong.");
+
+        driver.quit();
+    }
+
+
+    @Test
+    public void negativeWithEmptyValuesTest() {
 
     }
 }
