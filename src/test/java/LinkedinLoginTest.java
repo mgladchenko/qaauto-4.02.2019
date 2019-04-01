@@ -12,20 +12,15 @@ public class LinkedinLoginTest {
         WebDriver driver = new ChromeDriver();
         driver.get("https://www.linkedin.com/");
 
-        WebElement emailField = driver.findElement(By.xpath("//input[@id='login-email']"));
-        WebElement passwordField = driver.findElement(By.xpath("//input[@id='login-password']"));
-        WebElement signInButton = driver.findElement(By.xpath("//input[@id='login-submit']"));
+        LoginPage loginPage = new LoginPage(driver);
+        Assert.assertTrue(loginPage.isPageLoaded(),
+                "Login page was not loaded.");
 
-        emailField.sendKeys("linkedin.tst.yanina@gmail.com");
-        passwordField.sendKeys("Test123!");
-        signInButton.click();
+        loginPage.login("linkedin.tst.yanina@gmail.com", "Test123!");
 
-        WebElement profileNavigationItem = driver.findElement(By.xpath("//li[@id='profile-nav-item']"));
-        Assert.assertTrue(profileNavigationItem.isDisplayed(),
-                "ProfileNavigation item is not displayed on Home page");
-
-        Assert.assertEquals(driver.getTitle(), "LinkedIn",
-                "Home page title is wrong.");
+        HomePage homePage = new HomePage(driver);
+        Assert.assertTrue(homePage.isPageLoaded(),
+                "Home page is not loaded.");
 
         driver.quit();
     }
