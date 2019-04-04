@@ -3,35 +3,50 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class LinkedinLoginTest {
 
-    @Test
-    public void successfulLoginTest() {
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://www.linkedin.com/");
+    WebDriver driver;
+    LoginPage loginPage;
 
-        LoginPage loginPage = new LoginPage(driver);
+    @BeforeMethod
+    public void beforeMethod() {
+        driver = new ChromeDriver();
+        driver.get("https://www.linkedin.com/");
+        loginPage = new LoginPage(driver);
+    }
+
+    @AfterMethod
+    public void afterMethod() {
+        driver.quit();
+    }
+
+    @DataProvider
+    public Object[][] validDataProvider() {
+        return new Object[][]{
+                { "linkedin.tst.yanina@gmail.com", "Test123!" },
+                { "linkedin.TST.yanina@gmail.com", "Test123!" }
+        };
+    }
+
+    @Test(dataProvider = "validDataProvider")
+    public void successfulLoginTest(String userEmail, String userPassword) {
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page was not loaded.");
 
-        loginPage.login("linkedin.tst.yanina@gmail.com", "Test123!");
+        loginPage.login(userEmail, userPassword);
 
         HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.isPageLoaded(),
                 "Home page is not loaded.");
-
-        driver.quit();
     }
-
 
     @Test
     public void negativeWithEmptyValuesTest() {
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://www.linkedin.com/");
-
-        LoginPage loginPage = new LoginPage(driver);
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page was not loaded.");
 
@@ -42,10 +57,6 @@ public class LinkedinLoginTest {
 
     @Test
     public void negativeNavigatesToLoginSubmitTest() {
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://www.linkedin.com/");
-
-        LoginPage loginPage = new LoginPage(driver);
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page was not loaded.");
 

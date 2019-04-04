@@ -3,18 +3,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class LoginPage {
-    WebDriver driver;
+    private WebDriver driver;
 
-    WebElement emailField;
-    WebElement passwordField;
-    WebElement signInButton;
+    private WebElement emailField;
+    private WebElement passwordField;
+    private WebElement signInButton;
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
         initElements();
     }
 
-    public void initElements() {
+    private void initElements() {
         emailField = driver.findElement(By.xpath("//input[@id='login-email']"));
         passwordField = driver.findElement(By.xpath("//input[@id='login-password']"));
         signInButton = driver.findElement(By.xpath("//input[@id='login-submit']"));

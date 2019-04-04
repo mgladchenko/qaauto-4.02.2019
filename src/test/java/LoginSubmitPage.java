@@ -3,12 +3,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class LoginSubmitPage {
-    WebDriver driver;
+    private WebDriver driver;
 
-    WebElement loginSubmitForm;
+    private WebElement loginSubmitForm;
 
-    WebElement userEmailValidationMessage;
-    WebElement userPasswordValidationMessage;
+    private WebElement userEmailValidationMessage;
+    private WebElement userPasswordValidationMessage;
 
     public LoginSubmitPage(WebDriver driver) {
         this.driver = driver;
