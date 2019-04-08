@@ -28,8 +28,9 @@ public class LinkedinLoginTest {
     @DataProvider
     public Object[][] validDataProvider() {
         return new Object[][]{
-                { "linkedin.tst.yanina@gmail.com", "Test123!" },
-                { "linkedin.TST.yanina@gmail.com", "Test123!" }
+                //{ "linkedin.tst.yanina@gmail.com", "Test123!" },
+                //{ "linkedin.TST.yanina@gmail.com", "Test123!" },
+                { " linkedin.TST.yanina@gmail.com ", "Test123!" }
         };
     }
 
@@ -38,37 +39,55 @@ public class LinkedinLoginTest {
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page was not loaded.");
 
-        loginPage.login(userEmail, userPassword);
+        HomePage homePage = loginPage.login(userEmail, userPassword);
 
-        HomePage homePage = new HomePage(driver);
         Assert.assertTrue(homePage.isPageLoaded(),
                 "Home page is not loaded.");
     }
 
-    @Test
-    public void negativeWithEmptyValuesTest() {
+    @DataProvider
+    public Object[][] emptyValuesProvider() {
+        return new Object[][]{
+                { "", "" },
+                { "linkedin.TST.yanina@gmail.com", "" },
+                { "", "Test123!" }
+        };
+    }
+
+    @Test(dataProvider = "emptyValuesProvider")
+    public void negativeWithEmptyValuesTest(String userEmail, String userPassword) {
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page was not loaded.");
 
-        loginPage.login("", "");
+        loginPage.login(userEmail, userPassword);
 
         Assert.assertTrue(loginPage.isPageLoaded(), "Login page is not loaded.");
     }
 
-    @Test
-    public void negativeNavigatesToLoginSubmitTest() {
+    @DataProvider
+    public Object[][] invalidDataProvider() {
+        return new Object[][]{
+                { "linkedin.tst.yanina@gmail.com", "12345", "", "Hmm, that's not the right password. Please try again or request a new one."},
+                { "linkedin.tst.yanina@@gmail.com", "Test123!", "Hmm, we don't recognize that email. Please try again.", ""},
+        };
+    }
+
+    @Test(dataProvider = "invalidDataProvider")
+    public void negativeNavigatesToLoginSubmitTest(String userEmail,
+                                                   String userPassword,
+                                                   String expectedEmailValidation,
+                                                   String expectedPasswordValidation) {
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page was not loaded.");
 
-        loginPage.login("linkedin.tst.yanina@gmail.com", "12345");
+        loginPage.login(userEmail, userPassword);
 
         LoginSubmitPage loginSubmitPage = new LoginSubmitPage(driver);
         Assert.assertTrue(loginSubmitPage.isPageLoaded(), "LoginSubmit page is not loaded.");
 
-        Assert.assertEquals(loginSubmitPage.getUserEmailValidationMessage(), "",
+        Assert.assertEquals(loginSubmitPage.getUserEmailValidationMessage(), expectedEmailValidation,
                 "userEmail validation message is incorrect.");
-        Assert.assertEquals(loginSubmitPage.getUserPasswordValidationMessage(),
-                "Hmm, that's not the right password. Please try again or request a new one.",
+        Assert.assertEquals(loginSubmitPage.getUserPasswordValidationMessage(), expectedPasswordValidation,
                 "userPassword validation message is incorrect.");
     }
 }
