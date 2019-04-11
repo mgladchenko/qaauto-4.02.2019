@@ -59,9 +59,9 @@ public class LinkedinLoginTest {
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page was not loaded.");
 
-        loginPage.login(userEmail, userPassword);
+        LoginPage newLoginPage = loginPage.login(userEmail, userPassword);
 
-        Assert.assertTrue(loginPage.isPageLoaded(), "Login page is not loaded.");
+        Assert.assertTrue(newLoginPage.isPageLoaded(), "Login page is not loaded.");
     }
 
     @DataProvider
