@@ -59,9 +59,9 @@ public class LinkedinLoginTest {
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page was not loaded.");
 
-        loginPage.login(userEmail, userPassword);
+        LoginPage newLoginPage = loginPage.loginToLoginPage(userEmail, userPassword);
 
-        Assert.assertTrue(loginPage.isPageLoaded(), "Login page is not loaded.");
+        Assert.assertTrue(newLoginPage.isPageLoaded(), "Login page is not loaded.");
     }
 
     @DataProvider
@@ -80,9 +80,8 @@ public class LinkedinLoginTest {
         Assert.assertTrue(loginPage.isPageLoaded(),
                 "Login page was not loaded.");
 
-        loginPage.login(userEmail, userPassword);
+        LoginSubmitPage loginSubmitPage = loginPage.loginToLoginSubmitPage(userEmail, userPassword);
 
-        LoginSubmitPage loginSubmitPage = new LoginSubmitPage(driver);
         Assert.assertTrue(loginSubmitPage.isPageLoaded(), "LoginSubmit page is not loaded.");
 
         Assert.assertEquals(loginSubmitPage.getUserEmailValidationMessage(), expectedEmailValidation,

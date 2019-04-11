@@ -27,6 +27,20 @@ public class LoginPage {
         return new HomePage(driver);
     }
 
+    public LoginPage loginToLoginPage(String userEmail, String userPassword) {
+        emailField.sendKeys(userEmail);
+        passwordField.sendKeys(userPassword);
+        signInButton.click();
+        return new LoginPage(driver);
+    }
+
+    public LoginSubmitPage loginToLoginSubmitPage(String userEmail, String userPassword) {
+        emailField.sendKeys(userEmail);
+        passwordField.sendKeys(userPassword);
+        signInButton.click();
+        return new LoginSubmitPage(driver);
+    }
+
     public boolean isPageLoaded() {
         return signInButton.isDisplayed();
     }
