@@ -24,21 +24,15 @@ public class LoginPage {
         emailField.sendKeys(userEmail);
         passwordField.sendKeys(userPassword);
         signInButton.click();
-        return new HomePage(driver);
-    }
+        if (driver.getCurrentUrl().contains("/feed")) {
+            return new HomePage(driver);
+        }
+        if (driver.getCurrentUrl().contains("/login-submit")) {
+            return new LoginSubmitPage(driver);
+        } else {
+            return new LoginPage(driver);
+        }
 
-    public LoginPage loginToLoginPage(String userEmail, String userPassword) {
-        emailField.sendKeys(userEmail);
-        passwordField.sendKeys(userPassword);
-        signInButton.click();
-        return new LoginPage(driver);
-    }
-
-    public LoginSubmitPage loginToLoginSubmitPage(String userEmail, String userPassword) {
-        emailField.sendKeys(userEmail);
-        passwordField.sendKeys(userPassword);
-        signInButton.click();
-        return new LoginSubmitPage(driver);
     }
 
     public boolean isPageLoaded() {
