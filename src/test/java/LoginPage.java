@@ -20,19 +20,18 @@ public class LoginPage {
         signInButton = driver.findElement(By.xpath("//input[@id='login-submit']"));
     }
 
-    public HomePage login(String userEmail, String userPassword) {
+    public <GenericPage> GenericPage login(String userEmail, String userPassword) {
         emailField.sendKeys(userEmail);
         passwordField.sendKeys(userPassword);
         signInButton.click();
         if (driver.getCurrentUrl().contains("/feed")) {
-            return new HomePage(driver);
+            return (GenericPage) new HomePage(driver);
         }
         if (driver.getCurrentUrl().contains("/login-submit")) {
-            return new LoginSubmitPage(driver);
+            return (GenericPage) new LoginSubmitPage(driver);
         } else {
-            return new LoginPage(driver);
+            return (GenericPage) new LoginPage(driver);
         }
-
     }
 
     public boolean isPageLoaded() {
