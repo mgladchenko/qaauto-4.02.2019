@@ -3,7 +3,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import static java.lang.Thread.sleep;
+
 public class LoginPage {
+    private String a = "a";
     private WebDriver driver;
 
     @FindBy(xpath = "//input[@id='login-email']")
@@ -24,8 +27,13 @@ public class LoginPage {
         emailField.sendKeys(userEmail);
         passwordField.sendKeys(userPassword);
         signInButton.click();
+        try {
+            sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (driver.getCurrentUrl().contains("/feed")) {
-            return (GenericPage) PageFactory.initElements(driver, HomePage.class);
+            return (GenericPage) new HomePage(driver);
         }
         if (driver.getCurrentUrl().contains("/login-submit")) {
             return (GenericPage) new LoginSubmitPage(driver);
