@@ -5,6 +5,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class SearchTest {
 
     WebDriver driver;
@@ -43,5 +45,15 @@ public class SearchTest {
 
         Assert.assertEquals(searchResultsPage.getSearchResultsCount(), 10,
                 "Results count is wrong.");
+
+        List<String> searchResults = searchResultsPage.getSearchResults();
+
+        for (String searchResult : searchResults) {
+            Assert.assertTrue(searchResult.contains(searchTerm),
+                    "searchTerm not found");
+        }
+
+
+
     }
 }
