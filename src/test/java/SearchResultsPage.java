@@ -1,3 +1,4 @@
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -28,6 +29,7 @@ public class SearchResultsPage {
     public List<String> getSearchResults() {
         List<String> searchResultsList = new ArrayList<String>();
         for (WebElement searchResult : searchResults) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", searchResult);
             String searchResultText = searchResult.getText();
             searchResultsList.add(searchResultText);
         }

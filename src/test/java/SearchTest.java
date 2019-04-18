@@ -50,9 +50,8 @@ public class SearchTest {
 
         for (String searchResult : searchResults) {
             Assert.assertTrue(searchResult.contains(searchTerm),
-                    "searchTerm not found");
+                    "searchTerm: " + searchTerm + " not found in: \n" + searchResult);
         }
-
 
 
     }
