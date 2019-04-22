@@ -1,3 +1,5 @@
+package page;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -5,9 +7,10 @@ import org.openqa.selenium.support.PageFactory;
 
 import static java.lang.Thread.sleep;
 
-public class LoginPage {
-    private String a = "a";
-    private WebDriver driver;
+/**
+ * PageObject class for LoginPage.
+ */
+public class LoginPage extends BasePage {
 
     @FindBy(xpath = "//input[@id='login-email']")
     private WebElement emailField;
@@ -18,6 +21,10 @@ public class LoginPage {
     @FindBy(xpath = "//input[@id='login-submit']")
     private WebElement signInButton;
 
+    /**
+     * Constructor of LoginPage object.
+     * @param driver WebDriver instance from BaseTest.
+     */
     public LoginPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);

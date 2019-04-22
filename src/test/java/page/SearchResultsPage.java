@@ -1,3 +1,5 @@
+package page;
+
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,8 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchResultsPage {
-    private WebDriver driver;
+public class SearchResultsPage extends BasePage {
 
     @FindBy(xpath = "//li[contains(@class, 'search-result__occluded-item')]")
     private List<WebElement> searchResults;
@@ -29,7 +30,8 @@ public class SearchResultsPage {
     public List<String> getSearchResults() {
         List<String> searchResultsList = new ArrayList<String>();
         for (WebElement searchResult : searchResults) {
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", searchResult);
+            ((JavascriptExecutor) driver).executeScript(
+                    "arguments[0].scrollIntoView(true);", searchResult);
             String searchResultText = searchResult.getText();
             searchResultsList.add(searchResultText);
         }
