@@ -11,12 +11,16 @@ import java.util.List;
 
 public class SearchResultsPage extends BasePage {
 
+    @FindBy(xpath = "//h3[contains(@class, 'search-results__total ')]")
+    private WebElement totalResults;
+
     @FindBy(xpath = "//li[contains(@class, 'search-result__occluded-item')]")
     private List<WebElement> searchResults;
 
     public SearchResultsPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+        waitUntilElementIsVisible(totalResults);
     }
 
     public boolean isPageLoaded() {
